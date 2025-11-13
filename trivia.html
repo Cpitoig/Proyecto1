@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #89f7fe, #4bec58);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+#jugar-trivia {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.85);
+    padding: 50px 40px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+#jugar-trivia h2 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    color: #333;
+}
+#jugar-trivia button {
+    font-size: 1.2rem;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 10px;
+    background: #4bec58;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+#jugar-trivia button:hover {
+    background: #4bec58;
+    transform: translateY(-3px);
+}
+.modal {
+    display: none;
+    position: fixed;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    z-index: 1000;
+    backdrop-filter: blur(3px);
+}
+.modal-contenido {
+    background: #fff;
+    margin: 5% auto;
+    padding: 30px 40px;
+    border-radius: 20px;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+.modal-contenido h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+.cerrar {
+    float: right;
+    cursor: pointer;
+    font-size: 28px;
+    color: #ff5f57;
+    transition: color 0.2s ease;
+}
+.cerrar:hover {
+    color: #ff1c1c;
+}
+form p {
+    font-weight: bold;
+    margin-top: 15px;
+    color: #444;
+}
+label {
+    display: block;
+    margin: 5px 0;
+    cursor: pointer;
+}
+button[type="submit"] {
+    margin-top: 20px;
+    font-size: 1rem;
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+    background: #66a6ff;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+button[type="submit"]:hover {
+    background: #89f7fe;
+    transform: translateY(-2px);
+}
+.correcta {
+    color: green;
+    font-weight: bold;
+}
+
+.incorrecta {
+    color: red;
+    font-weight: bold;
+}
+
+#resultado h4 {
+    margin-top: 15px;
+    text-align: center;
+    color: #333;
+}
+
+#resultado {
+    margin-top: 15px;
+}
+</style>
+    
+</head>
+<body>
+<!-- SECCIÓN PARA JUGAR TRIVIA -->
+<section id="jugar-trivia">
+    <h2>¿Cuánto sabes de este Santo?</h2>
+    <button id="abrirTrivia">Probar tu conocimiento</button>
+    </section>
+    <!-- MODAL -->
+    <div id="modalTrivia" class="modal">
+     <div class="modal-contenido">
+     <span class="cerrar">&times;</span>
+     <!-- Aquí irá el formulario y resultados -->
+     <h2>Trivia sobre Beato Ignacio Caselles Garcia</h2>
+     <form id="formTrivia">
+      <p><strong>1.</strong> ¿Dónde nació el Beato Ignacio?</p>
+      <label><input type="radio" name="p1" value="Alicante"> Alicante</label><br>
+      <label><input type="radio" name="p1" value="Madrid"> Madrid</label><br>
+      <label><input type="radio" name="p1" value="Zaragoza"> Zaragoza</label><br><br>
+      <p><strong>2.</strong> ¿En qué año y fecha nació?</p>
+      <label><input type="radio" name="p2" value="24 de mayo, 1915"> 24 de mayo, 1915</label><br>
+      <label><input type="radio" name="p2" value="12 de febrero, 1903"> 12 de febrero, 1903</label><br>
+      <label><input type="radio" name="p2" value="10 de diciembre, 1900"> 10 de diciembre, 1900</label><br><br>
+      <p><strong>3.</strong> ¿Qué hizo de importante?</p>
+      <label><input type="radio" name="p3" value="Fundó escuelas"> Fundó escuelas</label><br>
+      <label><input type="radio" name="p3" value="Educaba en escuelas"> Educaba en escuelas</label><br>
+      <label><input type="radio" name="p3" value="Ayudó a Calasanz"> Ayudó a Calasanz</label><br><br>
+      <p><strong>4.</strong> ¿Cómo era él?</p>
+      <label><input type="radio" name="p4" value="Humilde y Sencillo"> Humilde y Sencillo</label><br>
+      <label><input type="radio" name="p4" value="Justo y Amoroso"> Justo y Amoroso</label><br>
+      <label><input type="radio" name="p4" value="Misericordioso y Paciente"> Misericordioso y Paciente</label><br><br>
+      <p><strong>5.</strong> ¿Cómo murió?</p>
+      <label><input type="radio" name="p5" value="En la calle apedreado"> En la calle apedreado</label><br>
+      <label><input type="radio" name="p5" value="Asesinado en la guerra civil"> Asesinado en la guerra civil</label><br>
+      <label><input type="radio" name="p5" value="Crucificado"> Crucificado</label><br><br>
+      <button type="submit">Calcular Promedio</button>
+     </form>
+     <div id="resultado"></div> 
+     
+     </div>
+    </div> 
+    <!-- SCRIPT básico para abrir/cerrar el MODAL-->
+<script>
+    const modal = document.getElementById("modalTrivia");
+    const btnAbrir = document.getElementById("abrirTrivia");
+    const btnCerrar = document.querySelector(".cerrar");
+    btnAbrir.onclick = () => { modal.style.display = "block"; };
+    btnCerrar.onclick = () => { modal.style.display = "none"; };
+    window.onclick = (e) => { if (e.target === modal) modal.style.display = "none"; };
+        document.getElementById("formTrivia").addEventListener("submit", function(e) {
+         e.preventDefault();
+         // Variable para puntaje
+         let puntaje = 0;
+         let salida = "";
+         // Capturamos la respuesta de la PREGUNTA 1
+         let r1 = document.querySelector('input[name="p1"]:checked');
+         let r2 = document.querySelector('input[name="p2"]:checked');
+         let r3 = document.querySelector('input[name="p3"]:checked');
+         let r4 = document.querySelector('input[name="p4"]:checked');
+         let r5 = document.querySelector('input[name="p5"]:checked');
+         // Validamos
+         if (r1) {
+         if (r1.value === "Alicante") {
+         puntaje++;
+         salida += "<p class='correcta'>1.  Correcta</p>";
+         } else {
+         salida += "<p class='incorrecta'>1.  Incorrecta. Correcta: Alicante</p>";
+         }
+         } else {
+         salida += "<p class='incorrecta'>1.  No respondida. Correcta: Alicante</p>";
+         }
+         if (r2) {
+         if (r2.value === "12 de febrero, 1903") {
+         puntaje++;
+         salida += "<p class='correcta'>2.  Correcta</p>";
+         } else {
+         salida += "<p class='incorrecta'>2.  Incorrecta. Correcta: 12 de febrero, 1903</p>";
+         }
+         } else {
+         salida += "<p class='incorrecta'>2.  No respondida. Correcta: 12 de febrero, 1903</p>";
+         }
+         if (r3) {
+         if (r3.value === "Educaba en escuelas") {
+         puntaje++;
+         salida += "<p class='correcta'>3.  Correcta</p>";
+         } else {
+         salida += "<p class='incorrecta'>3.  Incorrecta. Correcta: Educaba en escuelas</p>";
+         }
+         } else {
+         salida += "<p class='incorrecta'>3.  No respondida. Correcta: Educaba en escuelas</p>";
+         }
+         if (r4) {
+         if (r4.value === "Humilde y Sencillo") {
+         puntaje++;
+         salida += "<p class='correcta'>4.  Correcta</p>";
+         } else {
+         salida += "<p class='incorrecta'>4.  Incorrecta. Correcta: Humilde y Sencillo</p>";
+         }
+         } else {
+         salida += "<p class='incorrecta'>4.  No respondida. Correcta: Humilde y Sencillo</p>";
+         }
+         if (r5) {
+         if (r5.value === "Asesinado en la guerra civil") {
+         puntaje++;
+         salida += "<p class='correcta'>5.  Correcta</p>";
+         } else {
+         salida += "<p class='incorrecta'>5.  Incorrecta. Correcta: Asesinado en la guerra civil</p>";
+         }
+         } else {
+         salida += "<p class='incorrecta'>5.  No respondida. Correcta: Asesinado en la guerra civil</p>";
+         }
+         // Mostramos el resultado dentro del modal, debajo del formulario
+         salida += `<h4>Puntaje final: ${puntaje} de 5</h4>`;
+ if (puntaje === 5) salida += "Aprobado.";
+ else if (puntaje >= 3) salida += "Pudo haber mejorado.";
+ else salida += "Leiste el texto???"; 
+         document.getElementById("resultado").innerHTML = salida;
+         
+        });
+        </script> 
+
+</body>
+</html>
